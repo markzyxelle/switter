@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Username:
+  = @user.username
+%p
+  %b Password digest:
+  = @user.password_digest
+%p
+  %b Followers:
+  = @user.followers
+%p
+  %b Following:
+  = @user.following
+%p
+  %b Sweets:
+  = @user.sweets
+
+= link_to 'Edit', edit_user_path(@user)
+\|
+= link_to 'Back', users_path
