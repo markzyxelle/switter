@@ -5,7 +5,7 @@ class SweetsController < ApplicationController
   # GET /sweets
   # GET /sweets.json
   def index
-    @sweets = Sweet.all
+    @sweets = Sweet.all.order('created_at DESC')
     @sweet = Sweet.new
   end
 
@@ -30,11 +30,9 @@ class SweetsController < ApplicationController
     @sweet.user_id = session[:user_id]
     respond_to do |format|
       if @sweet.save
-        data = {:message => "Alert this!"}
-        render :json => data, :status => :ok
         #redirect_to(:controller => 'sweets', :action => 'index')
         format.html { redirect_to :controller => 'sweets', :action => 'index' , notice: 'Sweet was successfully created.' }
-        format.json { render :show, status: :created, location: @sweet }
+        format.json { render :json =>{ :data1 => @sweet } }
       else
         #redirect_to(:controller => 'sweets', :action => 'index')
         format.html { render :new }

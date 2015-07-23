@@ -1,4 +1,4 @@
-= form_for @sweet, :remote => true do |f|
+= form_for @sweet do |f|
   - if @sweet.errors.any?
     #error_explanation
       %h2= "#{pluralize(@sweet.errors.count, "error")} prohibited this sweet from being saved:"

@@ -13,6 +13,10 @@
         %tr
           %td
             .thread
+              -@sweets.each do |sweet2|
+                -if sweet2.parent_id == sweet.id
+                  =sweet2.message
+                  %br
               = sweet.message
             = form_for @sweet, :remote => true do |f|         
               .field
