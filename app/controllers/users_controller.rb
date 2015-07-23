@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :check_auth, except: [:index, :attempt_login, :logout]
+  before_action :check_auth, except: [:index, :attempt_login, :logout, :create]
+  #before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
@@ -26,11 +27,15 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        #format.json { render :show, status: :created, location: @user }
+        session[:user_id] = @user.id
+        session[:username] = @user.username
+        #redirect_to(:controller => 'sweets', :action => 'index')
+        format.html { redirect_to :controller => 'sweets', :action => 'index', notice: 'User was successfully created.' }
+        format.json { render :show, status: :created, location: @user }
       else
-        format.html { render :new }
-        #format.json { render json: @user.errors, status: :unprocessable_entity }
+        #redirect_to(:action => 'index')
+        format.html { render :index }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -70,7 +75,7 @@ class UsersController < ApplicationController
       session[:user_id] = user.id
       session[:username] = user.username
       flash[:notice] = "Log in successful"
-      redirect_to(:controller => 'home', :action => 'index')
+      redirect_to(:controller => 'sweets', :action => 'index')
     else
       reset_session
       flash[:notice] = "Log in failed"

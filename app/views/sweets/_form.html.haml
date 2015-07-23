@@ -1,0 +1,15 @@
+= form_for @sweet, :remote => true do |f|
+  - if @sweet.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@sweet.errors.count, "error")} prohibited this sweet from being saved:"
+      %ul
+        - @sweet.errors.full_messages.each do |msg|
+          %li= msg
+          
+  .field
+    = f.hidden_field :parent_id, :value => 0
+  .field
+    = f.label :message
+    = f.text_area :message, class:"sweet_message"
+  .actions
+    = f.submit 'Save', class:"submit-main-button erase-click"

@@ -1,0 +1,24 @@
+= session[:username]
+
+%h1 New sweet
+
+= render 'form'
+
+%h1 Listing sweets
+
+%table
+  %tbody
+    - @sweets.each do |sweet|
+      -if sweet.parent_id == 0
+        %tr
+          %td
+            .thread
+              = sweet.message
+            = form_for @sweet, :remote => true do |f|         
+              .field
+                = f.hidden_field :parent_id, :value => sweet.id
+              .field
+                = f.label :message
+                = f.text_area :message, class:"sweet_message"
+              .actions
+                = f.submit 'Save', class:"submit-sweet-button erase-click"

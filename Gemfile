@@ -45,3 +45,5 @@ end
 
 gem 'haml-rails'
 
+gem 'gon'
+

@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+  resources :users, :only => [:index, :attempt_login, :logout, :create]
+
+  resources :sweets, :only => [:index, :create]
+
   match ':controller(/:action(/:id))', :via => [:get, :post] 
 
-  root 'home#index'
-
-  resources :users
+  root 'sweets#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
