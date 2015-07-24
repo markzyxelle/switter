@@ -27,6 +27,7 @@ $(document).ready ->
 		else
 			$(this).parent().parent().find('.erase-click').attr('value', 'Enter Text')
 			$(this).parent().parent().find('.erase-click').attr('disabled',true)
+		$(this).parent().parent().find(".counter").text(140-@value.length)
 
 	$(".sweet_message").keypress (e) ->
 		if e.which < 0x20

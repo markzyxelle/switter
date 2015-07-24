@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
-  resources :users, :only => [:index, :attempt_login, :logout, :create]
+  get 'status/toggle'
+
+  get 'follow/follow'
+
+  resources :users, :only => [:index, :attempt_login, :logout, :create, :edit, :update]
 
   resources :sweets, :only => [:index, :create]
 
-  match ':controller(/:action(/:id))', :via => [:get, :post] 
+  match ':controller(/:action(/:id))', :via => [:get, :post, :put] 
 
   root 'sweets#index'
 

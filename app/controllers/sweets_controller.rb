@@ -11,8 +11,8 @@ class SweetsController < ApplicationController
 
   # GET /sweets/1
   # GET /sweets/1.json
-  #def show
-  #end
+  def show
+  end
 
   # GET /sweets/new
   #def new

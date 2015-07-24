@@ -1,5 +1,8 @@
 = session[:username]
 
+/ =link_to "Search Users", controller: "users", action: "list"
+=link_to "Change Password", controller: "users", action: "edit", id: session[:user_id]
+
 %h1 New sweet
 
 = render 'form'
@@ -15,14 +18,36 @@
             .thread
               -@sweets.each do |sweet2|
                 -if sweet2.parent_id == sweet.id
-                  =sweet2.message
+                  = User.where(:id => sweet2.user_id).first().username
                   %br
+                  = sweet2.message
+                  - if sweet2.statuses.where(:user_id => session[:user_id], :comment => 1).count == 0
+                    = button_to "Sweet (" + sweet2.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet2.id }, remote: true, class: "neutral"
+                  - else
+                    = button_to "Sweet (" + sweet2.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet2.id }, remote: true, class: "sweet"
+                  - if sweet2.statuses.where(:user_id => session[:user_id], :comment => 0).count == 0
+                    = button_to "Sour (" + sweet2.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet2.id }, remote: true, class: "neutral"
+                  - else
+                    = button_to "Sour (" + sweet2.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet2.id }, remote: true, class: "sour"
+                  %br
+              = User.where(:id => sweet.user_id).first().username
+              %br
               = sweet.message
+              - if sweet.statuses.where(:user_id => session[:user_id], :comment => 1).count == 0
+                = button_to "Sweet (" + sweet.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet.id }, remote: true, class: "neutral"
+              - else
+                = button_to "Sweet (" + sweet.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet.id }, remote: true, class: "sweet"
+              - if sweet.statuses.where(:user_id => session[:user_id], :comment => 0).count == 0
+                = button_to "Sour (" + sweet.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet.id }, remote: true, class: "neutral"
+              - else
+                = button_to "Sour (" + sweet.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet.id }, remote: true, class: "sour"
+              %br
             = form_for @sweet, :remote => true do |f|         
               .field
                 = f.hidden_field :parent_id, :value => sweet.id
               .field
                 = f.label :message
                 = f.text_area :message, class:"sweet_message"
+              .counter= 140
               .actions
                 = f.submit 'Save', class:"submit-sweet-button erase-click"

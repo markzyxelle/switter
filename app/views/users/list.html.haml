@@ -1,0 +1,5 @@
+- @users.each do |user|
+	-if user.id != session[:user_id]
+		= user.username
+		= button_to "Follow", { controller: "follow", action: "follow", id: user.id }, remote: true
+		%br

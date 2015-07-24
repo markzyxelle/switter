@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :check_auth, except: [:index, :attempt_login, :logout, :create]
-  #before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
@@ -10,12 +10,18 @@ class UsersController < ApplicationController
 
   # GET /users/1
   # GET /users/1.json
-  #def show
-  #end
+  # def show
+    
+  # end
 
   # GET /users/1/edit
-  #def edit
-  #end
+  def edit
+    if params[:id].to_i != session[:user_id]
+      redirect_to(:controller => 'sweets', :action => 'index')
+      return
+    end
+    @user = User.find(params[:id])
+  end
 
   # POST /users
   # POST /users.json
@@ -40,19 +46,23 @@ class UsersController < ApplicationController
     end
   end
 
+  def list
+    @users = User.all
+  end
+
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
-  #def update
-  #  respond_to do |format|
-  #    if @user.update(user_params)
-  #      format.html { redirect_to @user, notice: 'User was successfully updated.' }
-  #      format.json { render :show, status: :ok, location: @user }
-  #    else
-  #      format.html { render :edit }
-  #      format.json { render json: @user.errors, status: :unprocessable_entity }
-  #    end
-  #  end
-  #end
+  def update
+   respond_to do |format|
+     if @user.update(user_params)
+       format.html { redirect_to :controller => 'sweets', :action => 'index', notice: 'User was successfully updated.' }
+       format.json { render :show, status: :ok, location: @user }
+     else
+       format.html { render :edit }
+       format.json { render json: @user.errors, status: :unprocessable_entity }
+     end
+   end
+  end
 
   # DELETE /users/1
   # DELETE /users/1.json
