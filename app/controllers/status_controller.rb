@@ -11,6 +11,7 @@ class StatusController < ApplicationController
 	else
 	    Status.create(user_id: session[:user_id], sweet_id: params[:id], comment: 1)
 	end
+	redirect_to(:controller => "sweets", :action => "index")
   end
 
   def toggle_sour
@@ -25,5 +26,6 @@ class StatusController < ApplicationController
 	else
 	    Status.create(user_id: session[:user_id], sweet_id: params[:id], comment: 0)
 	end
+	redirect_to(:controller => "sweets", :action => "index")
   end
 end
