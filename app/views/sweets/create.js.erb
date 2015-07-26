@@ -1,6 +1,6 @@
 alert("<%= @sweet.message %>");
 $('tbody').prepend("<tr></tr>");
-$('tr:first').append('<td><div class="thread"><h4>New Thread</h4><%= form_for @new do |f|%><div class="field"><%= f.hidden_field :parent_id, :value => @sweet.id %></div><div class="field"><%= f.text_field :message, class:"sweet_message", placeholder:"Enter Sweet Here" %></div><div class="actions"><%= f.submit "Save", class:"submit-sweet-button erase-click" %></div><div class="rem-counter">Remaining Characters: <div class="counter">140</div></div><% end %>Main:<div class="row"><div class="col-md-3"><span class="username">User: <%= User.where(:id => @sweet.user_id).first().username %></span></div><div class="col-md-3"><%= @sweet.message %></div><div class="col-md-3"><%= button_to "Sweet (0)", { controller: "status", action: "toggle_sweet", id: @sweet.id }, class: "btn btn-default btn-xs" %></div><div class="col-md-3"><%= button_to "Sour (0)", { controller: "status", action: "toggle_sour", id: @sweet.id }, class: "btn btn-default btn-xs" %></div></div><br/></div></td>');
+$('tr:first').append('<td><div class="thread"><h4>New Thread</h4><%= form_for @new, :remote => true, :url => {:action => "create2"} do |f|%><div class="field"><%= f.hidden_field :parent_id, :value => @sweet.id %></div><div class="field"><textarea class="sweet_message" id="sweet_message" name="sweet[message]" placeholder="Enter sweet here"></textarea></div><div class="actions"><%= f.submit "Save", class:"submit-sweet-button erase-click" %></div><div class="rem-counter">Remaining Characters: <div class="counter">140</div></div><% end %>Main:<div class="row"><div class="col-md-3"><span class="username">User: <%= User.where(:id => @sweet.user_id).first().username %></span></div><div class="col-md-3"><%= @sweet.message %></div><div class="col-md-3"><%= button_to "Sweet (0)", { controller: "status", action: "toggle_sweet", id: @sweet.id }, class: "btn btn-default btn-xs button-sweet button-sweet-off", :remote => true %></div><div class="col-md-3"><%= button_to "Sour (0)", { controller: "status", action: "toggle_sour", id: @sweet.id }, class: "btn btn-default btn-xs button-sour button-sour-off", :remote => true %></div></div><br/></div></td>');
 var max = 140;
 $(".sweet_message").keyup(function(e) {
 	var value = $(this).val().length;
@@ -27,6 +27,10 @@ $(".sweet_message").keypress(function(e) {
 		$(this).value = $(this).value.substring(0, max)
 		return
 	}
+});
+$('.new_sweet').bind('ajax:complete', function() {
+    $(this).find("textarea").val('');
+	$(this).find(".counter").text(max);
 });
 
 

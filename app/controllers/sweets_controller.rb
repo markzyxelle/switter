@@ -54,6 +54,35 @@ class SweetsController < ApplicationController
     end
   end
 
+  def create2
+    @new = Sweet.new
+    @sweet = Sweet.new(sweet_params)
+    @sweet.user_id = session[:user_id]
+    respond_to do |format|
+      if @sweet.save
+        @sweet.message.scan(/\{.+?\}/).each do |tags|
+          temp = Doortag.where(:tag => tags.gsub(/\}$/, '')[1..@sweet.message.length]).first
+          if temp == nil
+            @doortag = Doortag.new
+            @doortag.tag = tags.gsub(/\}$/, '')[1..@sweet.message.length]
+            @doortag.save
+            @doortag.sweets << @sweet
+          else
+            temp.sweets << @sweet
+          end
+        end
+        #redirect_to(:controller => 'sweets', :action => 'index')
+        format.html { redirect_to :controller => 'sweets', :action => 'index' , notice: 'Sweet was successfully created.' }
+        format.js
+        format.json { render :json =>{ :data1 => @sweet } }
+      else
+        #redirect_to(:controller => 'sweets', :action => 'index')
+        format.html { render :new }
+        format.json { render json: @sweet.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # PATCH/PUT /sweets/1
   # PATCH/PUT /sweets/1.json
   # def update

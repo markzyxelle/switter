@@ -32,7 +32,7 @@
             %td
               .thread
                 %h4 New Thread
-                = form_for @sweet do |f|         
+                = form_for @sweet, :remote => true, :url => {:action => "create2"} do |f|         
                   .field
                     = f.hidden_field :parent_id, :value => sweet.id
                   .field
@@ -53,14 +53,14 @@
                         = sweet2.message
                       .col-md-3
                         - if sweet2.statuses.where(:user_id => session[:user_id], :comment => 1).count == 0
-                          = button_to "Sweet (" + sweet2.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet2.id }, class: "btn btn-default btn-xs"
+                          = button_to "Sweet (" + sweet2.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet2.id }, class: "btn btn-default btn-xs button-sweet button-sweet-off", :remote => true
                         - else
-                          = button_to "Sweet (" + sweet2.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet2.id }, class: "btn btn-primary btn-xs"
+                          = button_to "Sweet (" + sweet2.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet2.id }, class: "btn btn-primary btn-xs button-sweet button-sweet-on", :remote => true
                       .col-md-3
                         - if sweet2.statuses.where(:user_id => session[:user_id], :comment => 0).count == 0
-                          = button_to "Sour (" + sweet2.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet2.id }, class: "btn btn-default btn-xs"
+                          = button_to "Sour (" + sweet2.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet2.id }, class: "btn btn-default btn-xs button-sour button-sour-off", :remote => true
                         - else
-                          = button_to "Sour (" + sweet2.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet2.id }, class: "btn btn-warning btn-xs"
+                          = button_to "Sour (" + sweet2.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet2.id }, class: "btn btn-warning btn-xs button-sour button-sour-on", :remote => true
                     %br
                 Main:
                 .row
@@ -72,13 +72,13 @@
                     = sweet.message
                   .col-md-3
                     - if sweet.statuses.where(:user_id => session[:user_id], :comment => 1).count == 0
-                      = button_to "Sweet (" + sweet.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet.id }, class: "btn btn-default btn-xs"
+                      = button_to "Sweet (" + sweet.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet.id }, class: "btn btn-default btn-xs button-sweet button-sweet-off", :remote => true
                     - else
-                      = button_to "Sweet (" + sweet.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet.id }, class: "btn btn-primary btn-xs"
+                      = button_to "Sweet (" + sweet.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet.id }, class: "btn btn-primary btn-xs button-sweet button-sweet-on", :remote => true
                   .col-md-3
                     - if sweet.statuses.where(:user_id => session[:user_id], :comment => 0).count == 0
-                      = button_to "Sour (" + sweet.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet.id }, class: "btn btn-default btn-xs"
+                      = button_to "Sour (" + sweet.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet.id }, class: "btn btn-default btn-xs button-sour button-sour-off", :remote => true
                     - else
-                      = button_to "Sour (" + sweet.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet.id }, class: "btn btn-warning btn-xs"
+                      = button_to "Sour (" + sweet.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet.id }, class: "btn btn-warning btn-xs button-sour button-sour-on", :remote => true
                 %br
             
