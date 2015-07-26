@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723075319) do
+ActiveRecord::Schema.define(version: 20150724012149) do
+
+  create_table "doortags", force: :cascade do |t|
+    t.text     "tag",        limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "follows", force: :cascade do |t|
     t.integer  "follower_id",  limit: 4
@@ -38,6 +44,13 @@ ActiveRecord::Schema.define(version: 20150723075319) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
+
+  create_table "sweets_doortags", id: false, force: :cascade do |t|
+    t.integer "sweet_id",   limit: 4
+    t.integer "doortag_id", limit: 4
+  end
+
+  add_index "sweets_doortags", ["sweet_id", "doortag_id"], name: "index_sweets_doortags_on_sweet_id_and_doortag_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username",        limit: 255

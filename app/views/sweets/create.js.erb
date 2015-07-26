@@ -1,1 +1,32 @@
-$('<%= escape_javascript(render @user) %>').appendTo '#temp'
+alert("<%= @sweet.message %>");
+$('tbody').prepend("<tr></tr>");
+$('tr:first').append('<td><div class="thread"><h4>New Thread</h4><%= form_for @new do |f|%><div class="field"><%= f.hidden_field :parent_id, :value => @sweet.id %></div><div class="field"><%= f.text_field :message, class:"sweet_message", placeholder:"Enter Sweet Here" %></div><div class="actions"><%= f.submit "Save", class:"submit-sweet-button erase-click" %></div><div class="rem-counter">Remaining Characters: <div class="counter">140</div></div><% end %>Main:<div class="row"><div class="col-md-3"><span class="username">User: <%= User.where(:id => @sweet.user_id).first().username %></span></div><div class="col-md-3"><%= @sweet.message %></div><div class="col-md-3"><%= button_to "Sweet (0)", { controller: "status", action: "toggle_sweet", id: @sweet.id }, class: "btn btn-default btn-xs" %></div><div class="col-md-3"><%= button_to "Sour (0)", { controller: "status", action: "toggle_sour", id: @sweet.id }, class: "btn btn-default btn-xs" %></div></div><br/></div></td>');
+var max = 140;
+$(".sweet_message").keyup(function(e) {
+	var value = $(this).val().length;
+	if(value > 0){
+		$(this).parent().parent().find('.erase-click').attr('value', 'Submit');
+		$(this).parent().parent().find('.erase-click').attr('disabled',false);
+	}
+	else{
+		$(this).parent().parent().find('.erase-click').attr('value', 'Enter Text');
+		$(this).parent().parent().find('.erase-click').attr('disabled',true);
+	}
+	$(this).parent().parent().find(".counter").text(max-value);
+});
+
+$(".sweet_message").keypress(function(e) {
+	var value = $(this).val().length;
+	if(e.which < 0x20){
+		return
+	}
+	if(value == max){
+		e.preventDefault()
+	}
+	else if(value > max){
+		$(this).value = $(this).value.substring(0, max)
+		return
+	}
+});
+
+

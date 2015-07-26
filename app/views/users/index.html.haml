@@ -1,15 +1,18 @@
-- flash.each do |key, value|
-  = content_tag :div, value, class: "flash #{key}"
+.user_index
+	- flash.each do |key, value|
+		= content_tag :div, value, class: "flash"
+	= form_tag 'users/attempt_login' do
+		= field_set_tag do
+			= label_tag :username, 'Username:'
+			= text_field_tag :username
+			%br
+			= label_tag :password, 'Password:'
+			= password_field_tag :password
+			.actions
+				= submit_tag 'Log in'
 
-= form_tag 'users/attempt_login' do
-  = field_set_tag do
-    = label_tag :username, 'Username:'
-    = text_field_tag :username
-    = label_tag :password, 'Password:'
-    = password_field_tag :password
-    = submit_tag 'Log in'
+.user_index
+	%h1 New user
 
-%h1 New user
-
-= render 'form'
+	= render 'form'
 

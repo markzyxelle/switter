@@ -1,3 +1,87 @@
 // Place all the styles related to the Sweets controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.sweet_message{
+	width: 100%;
+}
+.sweet_index{
+ 	border-color : black;
+ 	border: solid thin black;
+ 	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+	padding: 2%;
+	margin-top: 8%;
+	box-shadow: 0 0 30px black;
+}
+.user_index{
+ 	border-color : black;
+ 	border: solid thin black;
+ 	margin-left: auto;
+	width: 31%;
+	padding: 2%;
+	margin-right: 8%;
+	margin-top: 4%;
+	box-shadow: 0 0 30px black;
+	padding-bottom: 3%;
+}
+table{
+	width: 100%;
+}
+td{
+	padding: 10%;
+	margin:10%;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+} 
+li {
+    display: inline;
+    font-size: 20px;
+    margin: 5px;
+    padding: 5px;
+}
+.navbar-brand{
+	display: inline;
+    font-size: 20px;
+    margin: 5px;
+    padding: 5px;
+    font-weight: bolder;
+}
+span#welcome{
+	font-size: 20px;
+}
+.rem-counter{
+	padding-right: 3%;
+	padding-bottom: 1%;
+}
+.username{
+	font-size: 20px;
+}
+.actions{
+	float: right;
+	position: relative;
+}
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: #E1FFE1;
+ }
+#search-doortag{
+	padding-top: 2%;
+}
+a.navbar-brand{
+	padding-top: 27%;
+}
+#username, #password, #user_username, #user_password{
+	width: 77%;
+}
+#username, #password{
+	margin-bottom: 3%;
+}
+.flash{
+	background-color: yellow;
+	margin-bottom: 1%;
+}

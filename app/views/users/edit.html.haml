@@ -1,3 +1,19 @@
-%h1 Editing user
+/ =link_to "Search Users", controller: "users", action: "list"
+%nav.navbar.navbar-default.navbar-fixed-top
+	.container-fluid
+		.navbar-header
+			%a.navbar-brand{:href => "/sweets"} Switter
+		%div
+			%ul.nav.navbar-nav
+				%li.active=link_to "Change Password", controller: "users", action: "edit", id: session[:user_id]
+				%li#search-doortag
+					= form_tag 'doortag/search' do
+						= field_set_tag do
+							Doortag:
+							= text_field_tag :tag
+							= submit_tag 'Search'
+				%li=link_to "Logout", controller: "users", action: "logout"
+.sweet_index
+	%h1 Editing user
 
-= render 'form'
+	= render 'form'
