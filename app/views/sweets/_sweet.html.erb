@@ -1,0 +1,4 @@
+<% div_for sweet do %>
+  <p><b>Posted <%= time_ago_in_words(sweet.created_at) %> ago</b></p>
+  <p><%= sweet.message %></p>
+<% end %>

@@ -44,37 +44,39 @@
                     .counter 140
                 -@sweets.each do |sweet2|
                   -if sweet2.parent_id == sweet.id
+                    %span.username   
+                      = User.where(:id => sweet2.user_id).first().username
+                    %br
+                    %span.message
+                      = sweet2.message
                     .row
                       .col-md-3
-                        %span.username  
-                          User: 
-                          = User.where(:id => sweet2.user_id).first().username
-                      .col-md-3
-                        = sweet2.message
                       .col-md-3
                         - if sweet2.statuses.where(:user_id => session[:user_id], :comment => 1).count == 0
                           = button_to "Sweet (" + sweet2.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet2.id }, class: "btn btn-default btn-xs button-sweet button-sweet-off", :remote => true
                         - else
                           = button_to "Sweet (" + sweet2.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet2.id }, class: "btn btn-primary btn-xs button-sweet button-sweet-on", :remote => true
                       .col-md-3
+                      .col-md-3
                         - if sweet2.statuses.where(:user_id => session[:user_id], :comment => 0).count == 0
                           = button_to "Sour (" + sweet2.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet2.id }, class: "btn btn-default btn-xs button-sour button-sour-off", :remote => true
                         - else
                           = button_to "Sour (" + sweet2.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet2.id }, class: "btn btn-warning btn-xs button-sour button-sour-on", :remote => true
                     %br
-                Main:
+                %br
+                %span.username   
+                  = User.where(:id => sweet.user_id).first().username
+                %br
+                %span.message
+                  = sweet.message
                 .row
                   .col-md-3
-                    %span.username  
-                      User: 
-                      = User.where(:id => sweet.user_id).first().username
-                  .col-md-3
-                    = sweet.message
                   .col-md-3
                     - if sweet.statuses.where(:user_id => session[:user_id], :comment => 1).count == 0
                       = button_to "Sweet (" + sweet.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet.id }, class: "btn btn-default btn-xs button-sweet button-sweet-off", :remote => true
                     - else
                       = button_to "Sweet (" + sweet.statuses.where(:comment => 1).count.to_s + ")", { controller: "status", action: "toggle_sweet", id: sweet.id }, class: "btn btn-primary btn-xs button-sweet button-sweet-on", :remote => true
+                  .col-md-3
                   .col-md-3
                     - if sweet.statuses.where(:user_id => session[:user_id], :comment => 0).count == 0
                       = button_to "Sour (" + sweet.statuses.where(:comment => 0).count.to_s + ")", { controller: "status", action: "toggle_sour", id: sweet.id }, class: "btn btn-default btn-xs button-sour button-sour-off", :remote => true
